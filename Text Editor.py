@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QFontDialog
+from PyQt5.QtWidgets import QMessageBox, QFontDialog, QPlainTextEdit, QTextEdit
 import os
 
 class Ui_MainWindow(object):
@@ -12,7 +12,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit.setGeometry(QtCore.QRect(0, -4, 941, 701))
+        self.textEdit.setGeometry(QtCore.QRect(-1, -4, 944, 701))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.textEdit.setFont(font)
@@ -35,43 +35,56 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.actionNew = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         self.actionNew.setFont(font)
         self.actionNew.setObjectName("actionNew")
         self.actionOpen = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         self.actionOpen.setFont(font)
         self.actionOpen.setObjectName("actionOpen")
         self.actionSave = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         self.actionSave.setFont(font)
         self.actionSave.setObjectName("actionSave")
         self.actionCut = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         self.actionCut.setFont(font)
         self.actionCut.setObjectName("actionCut")
         self.actionCopy = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         self.actionCopy.setFont(font)
         self.actionCopy.setObjectName("actionCopy")
         self.actionPaste = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         self.actionPaste.setFont(font)
         self.actionPaste.setObjectName("actionPaste")
+
+        self.actionUndo = QtWidgets.QAction(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.actionUndo.setFont(font)
+        self.actionUndo.setObjectName("actionUndo")
+
+        self.actionRedo = QtWidgets.QAction(MainWindow)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.actionRedo.setFont(font)
+        self.actionRedo.setObjectName("actionRedo")
+
         self.actionFont_Size = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         self.actionFont_Size.setFont(font)
         self.actionFont_Size.setObjectName("actionFont_Size")
         self.actionAbout = QtWidgets.QAction(MainWindow)
         self.actionAbout.setCheckable(False)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(9)
         self.actionAbout.setFont(font)
         self.actionAbout.setObjectName("actionAbout")
         self.menuFile.addAction(self.actionNew)
@@ -80,6 +93,8 @@ class Ui_MainWindow(object):
         self.menuEdit.addAction(self.actionCut)
         self.menuEdit.addAction(self.actionCopy)
         self.menuEdit.addAction(self.actionPaste)
+        self.menuEdit.addAction(self.actionUndo)
+        self.menuEdit.addAction(self.actionRedo)
         self.menuFont.addAction(self.actionFont_Size)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuFile.menuAction())
@@ -96,11 +111,19 @@ class Ui_MainWindow(object):
         self.actionNew.triggered.connect(self.new)
         self.actionOpen.triggered.connect(self.open)
         self.actionSave.triggered.connect(self.save)
+        self.actionUndo.triggered.connect(self.undo)
+        self.actionRedo.triggered.connect(self.redo)
 
         self.statusbar.showMessage("Status Bar")
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def redo(self):
+        self.textEdit.redo()
+    
+    def undo(self):
+        self.textEdit.undo()
 
     def new(self):
         if self.textEdit.toPlainText() != "":
@@ -260,6 +283,13 @@ class Ui_MainWindow(object):
         self.actionCopy.setShortcut(_translate("MainWindow", "Ctrl+C"))
         self.actionPaste.setText(_translate("MainWindow", "Paste"))
         self.actionPaste.setShortcut(_translate("MainWindow", "Ctrl+V"))
+
+        self.actionUndo.setText(_translate("MainWindow", "Undo"))
+        self.actionUndo.setShortcut(_translate("MainWindow", "Ctrl+Z"))
+
+        self.actionRedo.setText(_translate("MainWindow", "Redo"))
+        self.actionRedo.setShortcut(_translate("MainWindow", "Ctrl+Y"))
+
         self.actionFont_Size.setText(_translate("MainWindow", "Font Size"))
         self.actionAbout.setText(_translate("MainWindow", "About"))
 
